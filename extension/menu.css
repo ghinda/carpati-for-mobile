@@ -1,0 +1,118 @@
+/* injected by menu.js, only ever shown on small screens
+ */
+.retro-menu-toggle {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .menu-container {
+    float: none !important;
+    width: 100%;
+  }
+
+  .retro-menu-toggle {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 0;
+    background-color: #619647;
+    color: #fff;
+    font: inherit;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .retro-menu-toggle::before {
+    content: "\2630";
+    margin-right: 10px;
+  }
+
+  .retro-menu-toggle[aria-expanded="true"]::before {
+    content: "\2715";
+  }
+
+  .menulist {
+    display: none !important;
+    width: 100%;
+  }
+
+  .menulist.retro-menu-open {
+    display: block !important;
+  }
+
+  .menulist > li {
+    display: block !important;
+    width: 100%;
+  }
+
+  .menulist > li + li {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  /* stack the dropdowns in flow, and keep hover out of it — on touch a stray
+   * hover can stick to whatever was tapped last
+   */
+  .menulist ul {
+    position: static !important;
+    display: none !important;
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* the site's menu script fades submenus in and out by writing inline
+   * `display: none; opacity: 0` — beat both, not just the display
+   */
+  .menulist li.retro-open > ul {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .menulist a {
+    position: relative;
+    display: block !important;
+    padding: 12px 60px 12px 16px !important;
+    /* the header cell this sits in is right-aligned */
+    text-align: left !important;
+    /* the site keeps labels on one line for the dropdowns */
+    white-space: normal !important;
+  }
+
+  .menulist ul a {
+    padding-left: 32px !important;
+  }
+
+  .menulist ul ul a {
+    padding-left: 48px !important;
+  }
+
+  /* the site already ships a ">" in every parent link — make it the toggle
+   */
+  .menulist a .subind {
+    display: flex !important;
+    float: none !important;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    margin: 0 !important;
+    background-color: rgba(0, 0, 0, 0.15);
+    /* hide the site's ">" and point the arrow at what it opens instead
+     */
+    font-size: 0;
+  }
+
+  .menulist a .subind::before {
+    content: "\25BE";
+    font-size: 1rem;
+  }
+
+  .menulist li.retro-open > a .subind::before {
+    content: "\25B4";
+  }
+}

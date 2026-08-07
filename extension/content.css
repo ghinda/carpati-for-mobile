@@ -1,0 +1,339 @@
+@media (max-width: 1024px) {
+  :root {
+    --retro-font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-size: initial !important;
+  }
+
+  .page {
+    font-family: var(--retro-font-family) !important;
+  }
+
+  .parent,
+  .mainContainer,
+  .page,
+  .c2,
+  .c8,
+  .containerMenuLeft,
+  .containerMenuRight,
+  .containerContent,
+  .box_editor,
+  .box_img,
+  .box_img_resized,
+  .box_details,
+  .box_comment,
+  .boxMsgLight,
+  .box_title_home,
+  .box_title,
+  .box_home,
+  .box_related,
+  .box_title_poze,
+  .box_details_poze,
+  .box_title_ghid,
+  .box_ghid,
+  .box_details_ghid,
+  .abc,
+  .box_comment_ghid,
+  .box_title_green_ghid,
+  .box_green_ghid {
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  table[width="96%"],
+  table[width="97%"],
+  table[width="98%"],
+  table[width="99%"] {
+    width: 100% !important;
+
+    td {
+      max-width: 100% !important;
+      width: auto !important;
+    }
+
+    /* force wrap in article list pages
+     */
+    td:only-child {
+      overflow-wrap: anywhere;
+    }
+
+    /* left pointing arrow on comments
+     */
+    td.abc {
+      width: 10px !important;
+      background-position: top left;
+    }
+  }
+
+  .box_home {
+    /* remove js height
+     */
+    height: auto !important;
+  }
+
+  /* full width top banner
+   * full width footer decoration
+   */
+  .c2,
+  .c8 {
+    width: 100% !important;
+  }
+
+  .mainContainer .row .c2 {
+    min-height: 167px;
+    height: auto;
+    float: none;
+    padding-top: 7.2rem;
+    background-size: cover;
+  }
+
+  .c1,
+  .c3,
+  .c4,
+  .c6,
+  .c7 {
+    display: none !important;
+  }
+
+  .row {
+    flex-wrap: wrap !important;
+  }
+
+  .containerMenuLeft,
+  .containerMenuRight,
+  .containerContent {
+    float: none !important;
+  }
+
+  /* leave photo gallery previews allow to not break the frame
+   */
+  img:not(.gallery-frame img) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* home
+   */
+  .homeProfil {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+
+  /* sidebar
+   */
+  .containerMenuLeft {
+    padding: 0 14px;
+  }
+
+  /* content before sidebar
+   */
+  .page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .containerContent {
+    order: 1;
+  }
+
+  .containerMenuLeft {
+    order: 2;
+  }
+
+  /* calendar
+   */
+  .box_green center {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+  }
+
+  /* article
+   */
+  [itemprop="description"] {
+    font-size: 1rem;
+  }
+
+
+  /* weather widget
+   */
+  #wwm_weather {
+    height: auto !important;
+    max-width: 100%;
+    margin-left: 0 !important;
+    overflow-inline: auto;
+  }
+
+  /* login
+   */
+  .box_login {
+    input[type=text],
+    input[type=password] {
+      width: 100%;
+    }
+  }
+
+  /* fix small image preview in photo albums
+   */
+  .box_details td[width="30"] {
+    width: 50% !important;
+  }
+
+  /* fix large image preview in photo albums
+   */
+  .box_img #Layer1 {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #Layer1 #Layer2 {
+    display: none;
+  }
+
+  /* full width image on profile page
+   */
+  table[width="97%"] tr:has(> td[width="200"]) {
+    display: block;
+
+    > td {
+      display: block;
+      width: 100% !important;
+    }
+
+    td[width="10"] {
+      display: none !important;
+    }
+
+    td[width="200"] > img {
+      width: 100% !important;
+      max-width: 250px !important;
+      height: auto;
+    }
+  }
+
+  a[href*="/profil/"] {
+    display: inline-block;
+    max-width: 65px;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+
+  /* fix overflowing texts in article lists
+   */
+  .box_comment {
+    display: flow-root;
+
+    .padding {
+      padding: 0 !important;
+    }
+  }
+
+  /* forms
+   * match input by exclusion because most inputs don't use type
+   */
+  textarea,
+  select,
+  input:not(
+    [type="hidden"],
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [type="image"],
+    [type="checkbox"],
+    [type="radio"],
+    [type="file"]
+  ) {
+    max-width: 100%;
+  }
+
+  /* fix overflowing text on search results page
+   */
+  .box_related {
+    overflow-wrap: anywhere;
+  }
+
+  /* photo gallery page
+   */
+  .box_img_resized table {
+    tbody {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    tr {
+      display: contents;
+    }
+  }
+
+}
+
+@media (max-width: 576px) {
+  .box_home {
+    --box-height: 154px;
+  }
+
+  .box_home .homeProfil {
+    width: 20%;
+    min-height: var(--box-height);
+  }
+
+  .box_home .homeContent {
+    width: 72%;
+    min-height: var(--box-height);
+    margin: 0 4% 20px;
+  }
+
+  /* full width containerContent on small screens
+   */
+  .containerContent {
+    padding-inline: 0 !important;
+  }
+
+  /* spacing for header form
+   */
+  .mainContainer .row .c2 {
+    [name="q"] {
+      width: 210px;
+
+      margin-bottom: 5px;
+    }
+  }
+
+  /* sm calendar
+   */
+  .calendar_home {
+    width: 100%;
+  }
+
+  /* full width form elements in containerContent.
+   */
+  .containerContent:has(table form),
+  .containerContent:has(form table) {
+    textarea,
+    select,
+    input:not(
+      [type="hidden"],
+      [type="submit"],
+      [type="button"],
+      [type="reset"],
+      [type="image"],
+      [type="checkbox"],
+      [type="radio"],
+      [type="file"]
+    ) {
+      width: 100% !important;
+    }
+  }
+
+}

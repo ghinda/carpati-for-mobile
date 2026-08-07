@@ -1,0 +1,9 @@
+*.log
+.env
+*.pem
+*.pub
+*.crx
+*.nex
+
+pages/
+build/

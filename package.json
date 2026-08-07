@@ -1,0 +1,9 @@
+{
+  "name": "carpati-for-mobile",
+  "private": true,
+  "description": "Browser extension that adds a responsive retrofit layout for https://www.carpati.org/.",
+  "license": "MIT",
+  "scripts": {
+    "build": "V=$(node -p \"require('./extension/manifest.json').version\") && mkdir -p build && rm -f build/extension-$V.zip && cd extension && zip -qrX ../build/extension-$V.zip . -x '.*' '*/.*'"
+  }
+}
