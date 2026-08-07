@@ -315,10 +315,17 @@
   /* spacing for header form
    */
   .mainContainer .row .c2 {
+    min-height: 80px !important;
+    padding-top: 80px;
+
     [name="q"] {
       width: 210px;
 
       margin-bottom: 5px;
+    }
+
+    tr:last-of-type {
+      display: none;
     }
   }
 
