@@ -214,14 +214,6 @@
     }
   }
 
-  a[href*="/profil/"] {
-    display: inline-block;
-    max-width: 65px;
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-  }
-
   /* fix overflowing texts in article lists
    */
   .box_comment {
@@ -354,6 +346,16 @@
     ) {
       width: 100% !important;
     }
+  }
+
+  /* max width for profiles with long names, on sm only
+   */
+  a[href*="/profil/"] {
+    display: inline-block;
+    max-width: 65px;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
   }
 
 }
