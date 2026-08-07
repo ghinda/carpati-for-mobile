@@ -34,6 +34,12 @@ function setupMenu () {
     return
   }
 
+  /* prevent re-adding the menu if it's already there
+   */
+  if (menu.parentNode.querySelector('.retro-menu-toggle')) {
+    return
+  }
+
   const toggle = document.createElement('button')
   toggle.type = 'button'
   toggle.className = 'retro-menu-toggle'
@@ -75,8 +81,7 @@ function setupMenu () {
   }, true)
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', setupMenu)
-} else {
-  setupMenu()
-}
+/* first call needed for when injecting into already loaded page
+ */
+setupMenu()
+document.addEventListener('DOMContentLoaded', setupMenu, {once: true})
