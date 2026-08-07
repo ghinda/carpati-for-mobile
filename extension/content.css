@@ -290,6 +290,12 @@
     }
   }
 
+  /* move avatar to the top on journals page
+   */
+  .containerContent td[align=center]:not([valign=top]):has(a[href*="/profil/"]) {
+    vertical-align: top;
+  }
+
 }
 
 @media (max-width: 576px) {
