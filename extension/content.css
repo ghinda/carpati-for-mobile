@@ -113,13 +113,6 @@
     float: none !important;
   }
 
-  /* leave photo gallery previews allow to not break the frame
-   */
-  img:not(.gallery-frame img) {
-    max-width: 100%;
-    height: auto;
-  }
-
   /* home
    */
   .homeProfil {
@@ -263,16 +256,37 @@
     overflow-wrap: anywhere;
   }
 
-  /* photo gallery page
-   */
+   /* leave photo gallery previews allow to not break the frame
+    */
+   img:not(.gallery-frame img) {
+     max-width: 100%;
+     height: auto;
+   }
+
+   /* photo gallery page
+    */
   .box_img_resized table {
     tbody {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px 10px;
     }
 
     tr {
       display: contents;
+    }
+
+    /* spacers
+     */
+    td[colspan="3"] {
+      display: none;
+    }
+
+    /* photo descriptions
+     */
+    td[colspan="4"] {
+      flex: 1 0 100%;
     }
   }
 
