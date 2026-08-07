@@ -50,19 +50,29 @@ function setupMenu () {
 
   stripInlineStyles(menu)
 
+  /* capture click to fix issues with not being able to press top category link
+   * on mobile, because of page script.
+   */
   menu.addEventListener('click', (event) => {
     if (!smallScreen.matches) {
       return
     }
 
     const subind = event.target.closest('.subind')
-    if (!subind) {
+    if (subind) {
+      event.preventDefault()
+      event.stopPropagation()
+      subind.closest('li').classList.toggle('retro-open')
       return
     }
 
-    event.preventDefault()
-    subind.closest('li').classList.toggle('retro-open')
-  })
+    /* let the parent link navigate, out of the site script's reach
+     */
+    const link = event.target.closest('a')
+    if (link && link.querySelector('.subind')) {
+      event.stopPropagation()
+    }
+  }, true)
 }
 
 if (document.readyState === 'loading') {
