@@ -284,7 +284,8 @@
 
   /* move avatar to the top on journals page
    */
-  .containerContent td[align=center]:not([valign=top]):has(a[href*="/profil/"]) {
+  .containerContent td[align=center]:not([valign=top]):has(a[href*="/profil/"]),
+  .containerContent td[align=center]:not([valign=top]):has(img[src*="/no_profile/"]) {
     vertical-align: top;
   }
 
