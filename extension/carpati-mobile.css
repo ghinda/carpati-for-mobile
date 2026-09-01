@@ -1,6 +1,12 @@
+/* hide mobile menu toggle by default
+ */
+.retro-menu-toggle {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   :root {
-    --retro-font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --carpati-mobile-font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   }
 
   *,
@@ -14,7 +20,7 @@
   }
 
   .page {
-    font-family: var(--retro-font-family) !important;
+    font-family: var(--carpati-mobile-font-family) !important;
   }
 
   .parent,
@@ -71,6 +77,14 @@
       width: 10px !important;
       background-position: top left;
     }
+  }
+
+  /* force word break in comments, because they can contain very long urls that
+   * widen the whole table.
+   * scope it to align=left, to not affect avatars (that use align=center).
+   */
+  .table_no_padding td[align="left"] {
+    overflow-wrap: anywhere;
   }
 
   .box_home {
@@ -165,6 +179,11 @@
     max-width: 100%;
     margin-left: 0 !important;
     overflow-inline: auto;
+
+    iframe {
+      max-width: 700px;
+      height: 450px;
+    }
   }
 
   /* login
@@ -176,9 +195,12 @@
     }
   }
 
-  /* fix small image preview in photo albums
+  /* fix small image preview in user-specific photo albums.
+   * only resize tds with linked images, otherwise we end up resizing columns
+   * with checkboxes (in playlist), or icons (in the user photo gallery folder
+   * list page).
    */
-  .box_details td[width="30"] {
+  .box_details td[width="30"]:has(a img) {
     width: 50% !important;
   }
 
@@ -195,7 +217,7 @@
 
   /* full width image on profile page
    */
-  table[width="97%"] tr:has(> td[width="200"]) {
+  #prof tr {
     display: block;
 
     > td {
@@ -209,7 +231,6 @@
 
     td[width="200"] > img {
       width: 100% !important;
-      max-width: 250px !important;
       height: auto;
     }
   }
@@ -248,16 +269,38 @@
     overflow-wrap: anywhere;
   }
 
-   /* leave photo gallery previews allow to not break the frame
+  /* embedded videos
+   * iframes
+   */
+  object,
+  embed,
+  iframe {
+    max-width: 100%;
+  }
+
+  /* fix large photo previews, that are rendered in an iframe.
+   * so we can have only horizontall scroll on them.
+   */
+  object,
+  embed,
+  iframe:not(.iframe_img) {
+    height: auto;
+  }
+
+   /* images,
+    * but leave photo gallery previews allow to not break the
+    * image border/frame
     */
    img:not(.gallery-frame img) {
      max-width: 100%;
      height: auto;
    }
 
-   /* photo gallery page
+   /* photo gallery page,
+    * video gallery pages
     */
-  .box_img_resized table {
+  .box_img_resized table,
+  .box_img table[cellpadding="10"] {
     tbody {
       display: flex;
       flex-wrap: wrap;
@@ -275,11 +318,21 @@
       display: none;
     }
 
-    /* photo descriptions
+    /* photo and video descriptions
      */
     td[colspan="4"] {
       flex: 1 0 100%;
     }
+  }
+
+  /* video thumbs have author and title inside the cell.
+   * keep long text from widening the cell.
+   */
+  .box_img table[cellpadding="10"] td:not([colspan]) {
+    flex: 0 1 120px;
+    min-width: 0;
+
+    overflow-wrap: anywhere;
   }
 
   /* move avatar to the top on journals page
@@ -289,6 +342,123 @@
     vertical-align: top;
   }
 
+  /* comment box title in ghid
+   */
+  .box_title_ghid {
+    height: revert;
+  }
+
+  /* menu
+   */
+  .menu-container {
+    float: none !important;
+    width: 100%;
+  }
+
+  .retro-menu-toggle {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 0;
+    background-color: #619647;
+    color: #fff;
+    font: inherit;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .retro-menu-toggle::before {
+    content: "\2630";
+    display: inline-block;
+    width: 1.25em;
+    margin-right: 10px;
+
+    text-align: center;
+  }
+
+  .retro-menu-toggle[aria-expanded="true"]::before {
+    content: "\2715";
+  }
+
+  .menulist {
+    display: none !important;
+    width: 100%;
+  }
+
+  .menulist.retro-menu-open {
+    display: block !important;
+  }
+
+  .menulist > li {
+    display: block !important;
+    width: 100%;
+  }
+
+  .menulist > li + li {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .menulist ul {
+    position: static !important;
+    display: none !important;
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* force display and opacity on menu items.
+   * the site's js sets inline styles on hover.
+   */
+  .menulist li.retro-open > ul {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .menulist a {
+    position: relative;
+    display: block !important;
+    padding: 12px 60px 12px 16px !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+
+  .menulist ul a {
+    padding-left: 32px !important;
+  }
+
+  .menulist ul ul a {
+    padding-left: 48px !important;
+  }
+
+  /* the site ships a ">" in every parent link
+   */
+  .menulist a .subind {
+    display: flex !important;
+    float: none !important;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    margin: 0 !important;
+    background-color: rgba(0, 0, 0, 0.15);
+    /* hide the site's ">" and point the arrow at what it opens instead
+     */
+    font-size: 0;
+  }
+
+  .menulist a .subind::before {
+    content: "\25BE";
+    font-size: 1rem;
+  }
+
+  .menulist li.retro-open > a .subind::before {
+    content: "\25B4";
+  }
 }
 
 @media (max-width: 576px) {

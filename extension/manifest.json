@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Carpati.org for Mobile",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Makes carpati.org work better on mobile and small screens.",
   "short_name": "Carpati.org for Mobile",
   "icons": {
@@ -27,15 +27,12 @@
         "*://www.carpati.org/*"
       ],
       "js": [
-        "content.js",
-        "menu.js"
+        "carpati-mobile.js"
       ],
       "css": [
-        "content.css",
-        "menu.css"
+        "carpati-mobile.css"
       ],
-      "run_at": "document_start",
-      "all_frames": true
+      "run_at": "document_start"
     }
   ]
 }
