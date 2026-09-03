@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Carpati.org for Mobile",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Makes carpati.org work better on mobile and small screens.",
   "short_name": "Carpati.org for Mobile",
   "icons": {

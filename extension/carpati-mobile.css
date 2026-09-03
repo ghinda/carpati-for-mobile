@@ -532,8 +532,14 @@
     display: inline-block;
     max-width: 65px;
     overflow: hidden;
-
+    overflow-wrap: normal;
     text-overflow: ellipsis;
+  }
+
+  /* admin tags go on the next line
+   */
+  a[href*="/profil/"] + a[href*="/administratori/"] {
+    display: block;
   }
 
 }

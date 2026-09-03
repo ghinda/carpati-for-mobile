@@ -89,6 +89,28 @@ const ELLIPSIS_EXPECTATIONS = [
     width: 360,
     why: 'long nicknames beside a comment are elided at 65px',
   },
+  {
+    page: 'comment-with-video',
+    selector: 'span[itemprop="author"] a[href*="/profil/"]',
+    width: 360,
+    /* this fixture's author is short enough to fit, so stand a long name in.
+     * the site sets overflow-wrap: anywhere on the box it sits in.
+     */
+    text: 'balerinudincarpati',
+    why: 'the author nickname under an article is elided at 65px',
+  },
+]
+
+/* things that must sit on their own line rather than beside what precedes
+ * them
+ */
+const OWN_LINE_EXPECTATIONS = [
+  {
+    page: 'jurnal-public-profile',
+    selector: 'a[href*="/profil/"] + a[href*="/administratori/"]',
+    width: 360,
+    why: 'the (admin) tag goes under the username, not beside it',
+  },
 ]
 
 const CONTENT_TYPES = {
@@ -345,11 +367,13 @@ const EXERCISE_MENU = `(() => {
 /* how many line boxes the element's text occupies. counted over the text
  * nodes, so an element that also holds an avatar is not mistaken for wrapped.
  */
-const MEASURE_LINES = (selector) => `(() => {
+const MEASURE_LINES = (selector, text) => `(() => {
   const el = document.querySelector(${JSON.stringify(selector)})
   if (!el) {
     return null
   }
+
+  ${text ? `el.textContent = ${JSON.stringify(text)}` : ''}
 
   /* distinct vertical positions, not rect count: one line of text can come
    * back as several rects when it is split into separate runs
@@ -637,14 +661,14 @@ async function main () {
     }
   }
 
-  for (const {page, selector, width, why} of ELLIPSIS_EXPECTATIONS) {
+  for (const {page, selector, width, text, why} of ELLIPSIS_EXPECTATIONS) {
     if (!pages.includes(page)) {
       missing(page, 'its one-line check')
       continue
     }
 
     await load(page, width)
-    const m = await cdp.evaluate(MEASURE_LINES(selector))
+    const m = await cdp.evaluate(MEASURE_LINES(selector, text))
 
     if (!m) {
       notes.push(`${page}: no "${selector}" to measure`)
@@ -656,6 +680,38 @@ async function main () {
     check(m.lines === 1, `${page}: "${selector}" wrapped onto ${m.lines} lines`, `${why} — ${shape}`)
     check(m.elided, `${page}: "${selector}" is no longer clipped`,
       `${why}, so it should be too long for its box — ${shape}`)
+  }
+
+  for (const {page, selector, width, why} of OWN_LINE_EXPECTATIONS) {
+    if (!pages.includes(page)) {
+      missing(page, 'its own-line check')
+      continue
+    }
+
+    await load(page, width)
+    const m = await cdp.evaluate(`(() => {
+      const el = document.querySelector(${JSON.stringify(selector)})
+      const previous = el && el.previousElementSibling
+      if (!el || !previous) {
+        return null
+      }
+      const box = el.getBoundingClientRect()
+      const before = previous.getBoundingClientRect()
+
+      return {
+        besideIt: Math.abs(box.bottom - before.bottom) < 6,
+        display: getComputedStyle(el).display,
+        text: el.textContent.trim().slice(0, 16),
+      }
+    })()`)
+
+    if (!m) {
+      notes.push(`${page}: no "${selector}" to measure`)
+      continue
+    }
+
+    check(!m.besideIt, `${page}: "${m.text}" is still on the same line`,
+      `${why} — display ${m.display}`)
   }
 
   cdp.close()
